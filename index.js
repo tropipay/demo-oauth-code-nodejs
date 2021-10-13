@@ -42,7 +42,7 @@ app.get('/user/balance', (req, res, next) => {
 app.get('/oauth/response', async (req, res, next) => {
 	let access_token = "";
 	try{
-		//... verify the estate value
+		//... verify the state value
 		if(req.query['state'] !== state){
 			console.log('NOT secure, the state value not match');
 		}
