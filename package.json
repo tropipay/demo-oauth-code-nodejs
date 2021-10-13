@@ -1,7 +1,7 @@
 {
   "name": "kswc",
   "version": "1.0.2",
-  "description": "Library to make your Web API deployment easier",
+  "description": "TropiPay demos",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -11,21 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ameksike/kswc.git"
+    "url": ""
   },
   "keywords": [
-    "Ksike",
-    "REST",
-    "API",
-    "WEB",
-    "deploy"
+    "TropiPay"
   ],
   "author": "Antonio Membrides Espinosa",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ameksike/kswc/issues"
+    "url": "https://github.com/tropipay/demo-oauth-code-nodejs/issues"
   },
-  "homepage": "https://github.com/ameksike/kswc/wiki",
+  "homepage": "https://github.com/tropipay/demo-oauth-code-nodejs/wiki",
   "dependencies": {
     "axios": "^0.18.0"
   },
