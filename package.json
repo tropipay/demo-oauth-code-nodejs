@@ -1,7 +1,7 @@
 {
-  "name": "kswc",
+  "name": "TropiPay App",
   "version": "1.0.2",
-  "description": "TropiPay demos",
+  "description": "TropiPay App Demo",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
