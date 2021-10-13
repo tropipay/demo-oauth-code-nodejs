@@ -1,0 +1,38 @@
+{
+  "name": "kswc",
+  "version": "1.0.2",
+  "description": "Library to make your Web API deployment easier",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest",
+    "test:match": "jest -t",
+    "test:detect": "jest --detectOpenHandles"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ameksike/kswc.git"
+  },
+  "keywords": [
+    "Ksike",
+    "REST",
+    "API",
+    "WEB",
+    "deploy"
+  ],
+  "author": "Antonio Membrides Espinosa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ameksike/kswc/issues"
+  },
+  "homepage": "https://github.com/ameksike/kswc/wiki",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jest": "^26.5.0"
+  }
+}
