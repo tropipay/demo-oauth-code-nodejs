@@ -6,8 +6,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //------------------------------------------------------ VARs
 //...................................................... URL
-const oauth_authorize = 'http://localhost:3001/api/v2/access/authorize';
-const oauth_token = 'http://localhost:3001/api/v2/access/token';
+const url_tropipay = "https://tropipay-dev.herokuapp.com";  
+const oauth_authorize = url_tropipay + '/api/v2/access/authorize';
+const oauth_token = url_tropipay + '/api/v2/access/token';
 //...................................................... Credentials
 const client_id = "1b125cefa4e6aa5fc044a06190953eac";
 const client_secret = "6fdd1a8b146b22be1057d38f2b672e7d";
