@@ -85,8 +85,8 @@ app.get('/oauth/response', async (req, res, next) => {
             }),
         ]);
         res.end(`<p> Hi <strong>${profileData.data.name} </strong> this is your 
-                  TPP balance: <strong>${balanceData.data.balance / 100} </strong> EUR </p>`
-        );
+                  TPP balance: <strong>${balanceData.data.balance / 100} </strong> EUR </p>`);
+
     } catch (error) {
         res.end('Service: Not authorize');
     }
