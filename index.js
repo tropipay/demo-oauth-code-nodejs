@@ -7,12 +7,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 //------------------------------------------------------ VARs
 //...................................................... URL
-const url_tropipay = "https://tropipay-dev.herokuapp.com";
+const url_tropipay = "https://sandbox.tropipay.me";
 const oauth_authorize = url_tropipay + '/api/v2/access/authorize';
 const oauth_token = url_tropipay + '/api/v2/access/token';
-//...................................................... Credentials
-const client_id = "1b125cefa4e6aa5fc044a06190953eac";
-const client_secret = "6fdd1a8b146b22be1057d38f2b672e7d";
+//...................................................... Credentials (Menu > Seguridad > APP y Credenciales)
+const client_id = "946cef5ecad81f282e20d9bbb712ec64";
+const client_secret = "e25bbb41a2a2ed365e685e0edbb81162";
 //...................................................... Options
 const redirect_uri = "http://localhost:5000/oauth/response";
 const scope = "ALLOW_GET_BALANCE";
@@ -25,13 +25,13 @@ const code_challenge_method = "S256";
 
 //------------------------------------------------------ ROUTE HOME
 app.get('/', (req, res, next) => {
-    res.end('<a href="/user/balance"> User Balance </a>');
+    res.end('<a href="/user/balance"> Connect my Tropipay Account </a>');
 });
 //...................................................... ROUTE OAUTH STEP 1
 app.get('/user/balance', (req, res, next) => {
-
     const param = qs.stringify({
         response_type: "code",
+        client_id,
         client_secret,
         redirect_uri,
         code_challenge,
@@ -69,9 +69,9 @@ app.get('/oauth/response', async (req, res, next) => {
         //... GET SERVICE
         const response = await axios({
             headers: {'Authorization': 'Bearer ' + access_token},
-            url: "http://localhost:3000/api/users/balance"
+            url: url_tropipay + "/api/users/balance"
         });
-        res.end(`<h1> Balance: ${response.data.balance} </h1>`);
+        res.end(`<h1> Balance: ${response.data.balance/100} </h1>`);
     } catch (error) {
         res.end('Service: Not authorize');
     }
