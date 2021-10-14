@@ -25,10 +25,17 @@ const code_challenge_method = "S256";
 
 //------------------------------------------------------ ROUTE HOME
 app.get('/', (req, res, next) => {
-    res.end('<a href="/user/balance"> Connect my Tropipay Account </a>');
+    res.end('<a href="/user/connected_view" style="\n' +
+        '    border: 1px solid;\n' +
+        '    padding: 8px;\n' +
+        '    text-decoration: none;\n' +
+        '    font-family: sans-serif;\n' +
+        '    top: 40px;\n' +
+        '    position: relative;\n' +
+        '"> Connect my Tropipay Account </a>');
 });
 //...................................................... ROUTE OAUTH STEP 1
-app.get('/user/balance', (req, res, next) => {
+app.get('/user/connected_view', (req, res, next) => {
     const param = qs.stringify({
         response_type: "code",
         client_id,
@@ -67,11 +74,19 @@ app.get('/oauth/response', async (req, res, next) => {
     }
     try {
         //... GET SERVICE
-        const response = await axios({
-            headers: {'Authorization': 'Bearer ' + access_token},
-            url: url_tropipay + "/api/users/balance"
-        });
-        res.end(`<h1> Balance: ${response.data.balance/100} </h1>`);
+        let [balanceData, profileData] = await Promise.all([
+            axios({
+                headers: {'Authorization': 'Bearer ' + access_token},
+                url: url_tropipay + "/api/users/balance"
+            }),
+            axios({
+                headers: {'Authorization': 'Bearer ' + access_token},
+                url: url_tropipay + "/api/users/profile"
+            }),
+        ]);
+        res.end(`<p> Hi <strong>${profileData.data.name} </strong> this is your 
+                  TPP balance: <strong>${balanceData.data.balance / 100} </strong> EUR </p>`
+        );
     } catch (error) {
         res.end('Service: Not authorize');
     }
