@@ -1,5 +1,5 @@
 {
-  "name": "TropiPay App",
+  "name": "TropipayClientApp",
   "version": "1.0.2",
   "description": "TropiPay App Demo",
   "main": "index.js",
@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/tropipay/demo-oauth-code-nodejs/wiki",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "qs": "^6.10.1"
   },
   "devDependencies": {
     "body-parser": "^1.19.0",

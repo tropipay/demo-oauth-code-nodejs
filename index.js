@@ -1,12 +1,13 @@
 //------------------------------------------------------ SERVER INIT
 const app = require('express')();
 const axios = require('axios');
+const qs = require('qs');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 //------------------------------------------------------ VARs
 //...................................................... URL
-const url_tropipay = "https://tropipay-dev.herokuapp.com";  
+const url_tropipay = "https://tropipay-dev.herokuapp.com";
 const oauth_authorize = url_tropipay + '/api/v2/access/authorize';
 const oauth_token = url_tropipay + '/api/v2/access/token';
 //...................................................... Credentials
@@ -24,56 +25,56 @@ const code_challenge_method = "S256";
 
 //------------------------------------------------------ ROUTE HOME
 app.get('/', (req, res, next) => {
-	res.end('<a href="/user/balance"> User Balance </a>');
+    res.end('<a href="/user/balance"> User Balance </a>');
 });
 //...................................................... ROUTE OAUTH STEP 1
 app.get('/user/balance', (req, res, next) => {
-	const param = "?response_type=code" +
-				"&client_id=" + client_id +
-				"&client_secret=" + client_secret + 
-				"&redirect_uri=" + redirect_uri + 
-				"&code_challenge=" + code_challenge + 
-				"&code_challenge_method=" + code_challenge_method + 
-				"&state=" + state + 
-				"&scope=" + scope;
-	res.redirect(oauth_authorize + param);
+
+    const param = qs.stringify({
+        response_type: "code",
+        client_secret,
+        redirect_uri,
+        code_challenge,
+        code_challenge_method,
+        state,
+        scope
+    });
+    res.redirect(oauth_authorize + "?" + param);
 });
 //...................................................... ROUTE OAUTH STEP 2
 app.get('/oauth/response', async (req, res, next) => {
-	let access_token = "";
-	try{
-		//... verify the state value
-		if(req.query['state'] !== state){
-			console.log('NOT secure, the state value not match');
-		}
-		//... confifure options for get authorization code
-		const param = {
-			grant_type: "authorization_code",
-			code: req.query['code'],
-			client_id,
-			client_secret,
-			redirect_uri,
-			code_verifier,
-			scope
-		};
-		//... save authorization code
-		const token = await axios.post(oauth_token, param);
-		access_token = token.data.access_token;
-	}
-	catch(error){
-		res.end('OAUTH: Not authorize');
-	}
-	try {
-		//... GET SERVICE
-		const response = await axios({
-			headers: { 'Authorization': 'Bearer '+ access_token },
-			url: "http://localhost:3000/api/users/balance"
-		});
-		res.end(`<h1> Balance: ${response.data.balance} </h1>`);
-	}
-	catch(error){
-		res.end('Service: Not authorize');
-	}
+    let access_token = "";
+    try {
+        //... verify the state value
+        if (req.query['state'] !== state) {
+            console.log('NOT secure, the state value not match');
+        }
+        //... confifure options for get authorization code
+        const param = {
+            grant_type: "authorization_code",
+            code: req.query['code'],
+            client_id,
+            client_secret,
+            redirect_uri,
+            code_verifier,
+            scope
+        };
+        //... save authorization code
+        const token = await axios.post(oauth_token, param);
+        access_token = token.data.access_token;
+    } catch (error) {
+        res.end('OAUTH: Not authorize');
+    }
+    try {
+        //... GET SERVICE
+        const response = await axios({
+            headers: {'Authorization': 'Bearer ' + access_token},
+            url: "http://localhost:3000/api/users/balance"
+        });
+        res.end(`<h1> Balance: ${response.data.balance} </h1>`);
+    } catch (error) {
+        res.end('Service: Not authorize');
+    }
 });
 
 //------------------------------------------------------ SERVER START
