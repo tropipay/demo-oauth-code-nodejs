@@ -1,4 +1,4 @@
-# OAuth code
+# OAuth2 Authorization Code 
 Example for oauth2 integration based on authorization code flow
 
 ## Install 
